@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://moradmohammed226-byte.github.io/nova-deals/sitemap.xml
