@@ -3,15 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova Deals - أقوى العروض والخصومات اليومية</title>
+    <meta name="theme-color" content="#0f766e">
+    <meta name="description" content="نوفا ديلز - اكتشف أفضل العروض والخصومات اليومية من المتاجر الموثوقة.">
+    <title>نوفا ديلز | عروض وخصومات يومية</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
+    <div class="topbar">
+        🔥 عروض يومية جديدة — وفر أكثر واشترِ بذكاء
+    </div>
+
     <header class="site-header">
-        <div class="container">
-            <h1>Nova Deals</h1>
-            <nav>
-                <a href="index.html">الرئيسية</a>
+        <div class="container header-inner">
+
+            <a href="index.html" class="brand" aria-label="نوفا ديلز">
+                <span class="brand-icon">N</span>
+                <span>نوفا <strong>ديلز</strong></span>
+            </a>
+
+            <form class="search-box" role="search">
+                <input
+                    type="search"
+                    placeholder="ابحث عن منتج أو عرض..."
+                    aria-label="البحث عن منتج أو عرض"
+                >
+                <button type="submit" aria-label="بحث">⌕</button>
+            </form>
+
+            <a href="#deals" class="header-deals">🔥 العروض</a>
+
+            <nav class="main-nav" aria-label="التنقل الرئيسي">
+                <a class="active" href="index.html">الرئيسية</a>
                 <a href="categories/electronics.html">الإلكترونيات</a>
                 <a href="categories/home.html">المنزل</a>
                 <a href="categories/fashion.html">الموضة</a>
@@ -19,33 +43,285 @@
                 <a href="categories/gulf.html">الخليج</a>
                 <a href="pages/contact.html">اتصل بنا</a>
             </nav>
+
         </div>
     </header>
 
-    <main class="container content-section">
-        <div style="background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; padding: 32px 20px; border-radius: 16px; margin-bottom: 30px; text-align: center; box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);">
-            <h2 style="color: white; font-size: 26px; margin-bottom: 10px;">أقوى صفقات وعروض المتاجر الموثوقة</h2>
-            <p style="color: #e2e8f0; font-size: 16px; margin-bottom: 0;">نختار لك أفضل التخفيضات اليومية بأسعار حقيقية ومحدثة باستمرار.</p>
-        </div>
+    <main>
 
-        <h2 style="margin-bottom: 20px; border-right: 4px solid #2563eb; padding-right: 10px;">أحدث العروض المضافة</h2>
-        
-        <div class="deals-grid">
-            <!-- نموذج عرض مصغر تجريبي للرئيسية -->
-            <div class="deal-card">
-                <span style="background: #e2e8f0; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; color: #475569;">إلكترونيات</span>
-                <h3 style="font-size: 18px; margin: 12px 0 8px 0;">هاتف ذكي بمواصفات عالية وخصم حصري</h3>
-                <p style="font-size: 14px; color: #64748b; margin-bottom: 16px;">اكتشف تفاصيل العرض ووفر أكثر عند الشراء من المتجر المعتمد.</p>
-                <a href="deals/example-product/index.html" class="btn-affiliate">عرض التفاصيل والصفقة</a>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="container hero-inner">
+
+                <div class="hero-content">
+                    <span class="hero-badge">✨ عروض مختارة بعناية</span>
+
+                    <h1>
+                        أفضل العروض
+                        <span>في مكان واحد</span>
+                    </h1>
+
+                    <p>
+                        نساعدك على اكتشاف الخصومات والصفقات المميزة
+                        من المتاجر الموثوقة بأسعار واضحة ومحدثة.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#deals" class="btn-primary">
+                            اكتشف العروض الآن
+                        </a>
+
+                        <a href="#categories" class="btn-secondary">
+                            تصفح التصنيفات
+                        </a>
+                    </div>
+
+                    <div class="hero-trust">
+                        <div>
+                            <strong>عروض متجددة</strong>
+                            <span>باستمرار</span>
+                        </div>
+
+                        <div>
+                            <strong>متاجر موثوقة</strong>
+                            <span>مختارة</span>
+                        </div>
+
+                        <div>
+                            <strong>24/7</strong>
+                            <span>تحديثات</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-card">
+                    <span class="hero-card-badge">خصم مميز</span>
+                    <div class="hero-product-icon">🎧</div>
+                    <span class="hero-card-category">إلكترونيات</span>
+                    <h2>أفضل صفقات الإلكترونيات</h2>
+                    <p>اكتشف العروض الحالية قبل انتهائها.</p>
+
+                    <div class="hero-price">
+                        <span>صفقات وخصومات مميزة</span>
+                        <strong>تحديث مستمر</strong>
+                    </div>
+                </div>
+
             </div>
-        </div>
+        </section>
+
+        <!-- Categories -->
+        <section class="section" id="categories">
+            <div class="container">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="section-label">تصفح بسهولة</span>
+                        <h2>التصنيفات</h2>
+                    </div>
+                </div>
+
+                <div class="category-grid">
+
+                    <a href="categories/electronics.html" class="category-card">
+                        <span>💻</span>
+                        <strong>الإلكترونيات</strong>
+                        <small>هواتف وأجهزة</small>
+                    </a>
+
+                    <a href="categories/home.html" class="category-card">
+                        <span>🏠</span>
+                        <strong>المنزل</strong>
+                        <small>منزل ومطبخ</small>
+                    </a>
+
+                    <a href="categories/fashion.html" class="category-card">
+                        <span>👟</span>
+                        <strong>الموضة</strong>
+                        <small>أزياء وإكسسوارات</small>
+                    </a>
+
+                    <a href="categories/egypt.html" class="category-card">
+                        <span>🇪🇬</span>
+                        <strong>عروض مصر</strong>
+                        <small>متاجر مصرية</small>
+                    </a>
+
+                    <a href="categories/gulf.html" class="category-card">
+                        <span>🌍</span>
+                        <strong>عروض الخليج</strong>
+                        <small>متاجر الخليج</small>
+                    </a>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Deals -->
+        <section class="section deals-section" id="deals">
+            <div class="container">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="section-label">محدثة باستمرار</span>
+                        <h2>أحدث العروض</h2>
+                    </div>
+
+                    <span class="section-note">🔥 صفقات مختارة</span>
+                </div>
+
+                <div class="deals-grid">
+
+                    <article class="deal-card">
+                        <div class="deal-image blue">📱</div>
+
+                        <div class="deal-content">
+                            <span class="deal-category">إلكترونيات</span>
+
+                            <h3>هاتف ذكي بمواصفات عالية وخصم حصري</h3>
+
+                            <p>
+                                اكتشف تفاصيل العرض ووفر أكثر عند الشراء
+                                من المتجر المعتمد.
+                            </p>
+
+                            <div class="deal-bottom">
+                                <div>
+                                    <small>خصم حتى</small>
+                                    <strong>45%</strong>
+                                </div>
+
+                                <a href="deals/example-product/index.html"
+                                   class="btn-affiliate">
+                                    عرض الصفقة
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="deal-card">
+                        <div class="deal-image orange">🎧</div>
+
+                        <div class="deal-content">
+                            <span class="deal-category">إلكترونيات</span>
+
+                            <h3>سماعات لاسلكية بعزل ضوضاء ممتاز</h3>
+
+                            <p>
+                                صفقة مميزة على منتج مطلوب لفترة محدودة.
+                            </p>
+
+                            <div class="deal-bottom">
+                                <div>
+                                    <small>خصم حتى</small>
+                                    <strong>35%</strong>
+                                </div>
+
+                                <a href="deals/example-product/index.html"
+                                   class="btn-affiliate">
+                                    عرض الصفقة
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="deal-card">
+                        <div class="deal-image green">🏠</div>
+
+                        <div class="deal-content">
+                            <span class="deal-category">المنزل</span>
+
+                            <h3>منتجات منزلية بأسعار مخفضة</h3>
+
+                            <p>
+                                اختر من مجموعة من العروض المنزلية اليومية.
+                            </p>
+
+                            <div class="deal-bottom">
+                                <div>
+                                    <small>خصم حتى</small>
+                                    <strong>50%</strong>
+                                </div>
+
+                                <a href="deals/example-product/index.html"
+                                   class="btn-affiliate">
+                                    عرض الصفقة
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Trust -->
+        <section class="trust-section">
+            <div class="container">
+
+                <div class="trust-grid">
+
+                    <div class="trust-item">
+                        <span>✓</span>
+                        <div>
+                            <strong>عروض واضحة</strong>
+                            <p>معلومات مباشرة بدون تعقيد.</p>
+                        </div>
+                    </div>
+
+                    <div class="trust-item">
+                        <span>✓</span>
+                        <div>
+                            <strong>متاجر موثوقة</strong>
+                            <p>نركز على المتاجر المعروفة.</p>
+                        </div>
+                    </div>
+
+                    <div class="trust-item">
+                        <span>↻</span>
+                        <div>
+                            <strong>تحديث مستمر</strong>
+                            <p>نضيف العروض ونحدث المحتوى.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
     </main>
 
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2026 Nova Deals. جميع الحقوق محفوظة.</p>
-            <p style="font-size: 12px; margin-top: 8px; color: #94a3b8;">هذا الموقع مشارك في برامج التسويق بالعمولة.</p>
+
+            <div class="footer-brand">
+                <strong>نوفا ديلز</strong>
+                <p>
+                    اكتشف أفضل العروض والخصومات اليومية
+                    من المتاجر الموثوقة.
+                </p>
+            </div>
+
+            <div class="footer-links">
+                <a href="index.html">الرئيسية</a>
+                <a href="categories/electronics.html">الإلكترونيات</a>
+                <a href="categories/home.html">المنزل</a>
+                <a href="categories/fashion.html">الموضة</a>
+                <a href="categories/egypt.html">مصر</a>
+                <a href="categories/gulf.html">الخليج</a>
+                <a href="pages/contact.html">اتصل بنا</a>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 نوفا ديلز. جميع الحقوق محفوظة.</p>
+                <p>هذا الموقع مشارك في برامج التسويق بالعمولة.</p>
+            </div>
+
         </div>
     </footer>
+
 </body>
 </html>
