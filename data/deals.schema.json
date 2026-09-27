@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NOVA Deals",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "title_ar",
+      "store",
+      "category",
+      "country",
+      "currency",
+      "status"
+    ],
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "title_ar": {
+        "type": "string"
+      },
+      "title_en": {
+        "type": "string"
+      },
+      "store": {
+        "type": "string"
+      },
+      "category": {
+        "type": "string"
+      },
+      "country": {
+        "type": "string"
+      },
+      "price": {
+        "type": ["number", "null"]
+      },
+      "currency": {
+        "type": "string"
+      },
+      "discount": {
+        "type": ["number", "null"],
+        "minimum": 0,
+        "maximum": 100
+      },
+      "image": {
+        "type": ["string", "null"]
+      },
+      "description_ar": {
+        "type": "string"
+      },
+      "product_url": {
+        "type": ["string", "null"]
+      },
+      "affiliate_url": {
+        "type": ["string", "null"]
+      },
+      "verified_at": {
+        "type": ["string", "null"]
+      },
+      "status": {
+        "type": "string",
+        "enum": ["draft", "active", "expired"]
+      }
+    },
+    "additionalProperties": false
+  }
+}
