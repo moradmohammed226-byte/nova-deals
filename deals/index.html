@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="عروض ومنتجات مختارة من نوفا ديلز.">
+  <title>العروض والمنتجات | نوفا ديلز</title>
+  <link rel="canonical" href="https://moradmohammed226-byte.github.io/nova-deals/deals/">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .deals-page{
+      max-width:1200px;
+      margin:0 auto;
+      padding:24px 16px;
+      box-sizing:border-box;
+    }
+
+    .deals-page *,
+    .deals-page *::before,
+    .deals-page *::after{
+      box-sizing:border-box;
+    }
+
+    .deals-head{
+      margin-bottom:24px;
+    }
+
+    .deals-head h1{
+      margin:0 0 8px;
+      font-size:clamp(28px,7vw,42px);
+      line-height:1.25;
+    }
+
+    .deals-head p{
+      margin:0;
+      line-height:1.7;
+    }
+
+    .deals-search{
+      display:flex;
+      gap:8px;
+      margin:20px 0;
+    }
+
+    .deals-search input{
+      flex:1;
+      min-width:0;
+      padding:13px 15px;
+      border:1px solid #d1d5db;
+      border-radius:10px;
+      font-size:16px;
+      line-height:1.4;
+    }
+
+    .deals-search button{
+      padding:13px 20px;
+      border:0;
+      border-radius:10px;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+
+    .count{
+      color:#64748b;
+      font-size:14px;
+      margin-bottom:18px;
+    }
+
+    .deals-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+      gap:18px;
+      align-items:stretch;
+    }
+
+    .deals-grid .deal-card{
+      width:100%;
+      min-width:0;
+      height:auto;
+      min-height:0;
+      background:#fff;
+      border:1px solid #e5e7eb;
+      border-radius:14px;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .deals-grid .deal-image{
+      display:block;
+      width:100%;
+      height:210px;
+      min-height:210px;
+      object-fit:contain;
+      background:#f8fafc;
+      border:0;
+    }
+
+    .deals-grid .deal-body{
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      gap:9px;
+      flex:1;
+      min-width:0;
+    }
+
+    .deals-grid .deal-title{
+      display:block;
+      width:100%;
+      height:auto;
+      min-height:0;
+      max-height:none;
+      margin:0;
+      padding:0;
+      font-size:15px;
+      font-weight:600;
+      line-height:1.6;
+      white-space:normal;
+      overflow:visible;
+      word-break:break-word;
+      overflow-wrap:anywhere;
+    }
+
+    .deals-grid .deal-store{
+      font-size:13px;
+      line-height:1.5;
+      color:#64748b;
+    }
+
+    .deals-grid .deal-price{
+      font-size:18px;
+      line-height:1.4;
+      font-weight:700;
+    }
+
+    .deals-grid .deal-discount{
+      display:inline-block;
+      width:max-content;
+      max-width:100%;
+      background:#f0fdfa;
+      color:#0f766e;
+      padding:4px 8px;
+      border-radius:7px;
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    .deals-grid .deal-button{
+      display:block;
+      width:100%;
+      text-align:center;
+      text-decoration:none;
+      background:#0f766e;
+      color:#fff;
+      padding:11px;
+      border-radius:9px;
+      margin-top:auto;
+      line-height:1.4;
+    }
+
+    .state{
+      text-align:center;
+      padding:40px 15px;
+      color:#64748b;
+    }
+
+    @media (max-width:520px){
+      .deals-page{
+        padding:18px 12px;
+      }
+
+      .deals-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:10px;
+      }
+
+      .deals-grid .deal-image{
+        height:150px;
+        min-height:150px;
+      }
+
+      .deals-grid .deal-body{
+        padding:10px;
+        gap:7px;
+      }
+
+      .deals-grid .deal-title{
+        font-size:13px;
+        line-height:1.55;
+      }
+
+      .deals-grid .deal-price{
+        font-size:16px;
+      }
+
+      .deals-grid .deal-button{
+        padding:9px 6px;
+        font-size:13px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="deals-page">
+    <header class="deals-head">
+      <a href="../index.html">← العودة إلى نوفا ديلز</a>
+      <h1>العروض والمنتجات</h1>
+      <p>منتجات وروابط عروض يتم جلبها من مصادر الشركاء.</p>
+    </header>
+
+    <form class="deals-search" id="dealsSearch">
+      <input id="searchInput" type="search" placeholder="ابحث عن منتج..." aria-label="البحث عن منتج">
+      <button type="submit">بحث</button>
+    </form>
+
+    <div class="count" id="count"></div>
+    <section class="deals-grid" id="dealsGrid"></section>
+    <div class="state" id="state">جاري تحميل المنتجات...</div>
+  </main>
+
+  <script>
+    const grid = document.getElementById("dealsGrid");
+    const state = document.getElementById("state");
+    const count = document.getElementById("count");
+    const searchForm = document.getElementById("dealsSearch");
+    const searchInput = document.getElementById("searchInput");
+
+    let deals = [];
+
+    function render(items) {
+      grid.innerHTML = "";
+
+      if (!items.length) {
+        state.textContent = "لم يتم العثور على منتجات مطابقة.";
+        state.style.display = "block";
+        count.textContent = "";
+        return;
+      }
+
+      state.style.display = "none";
+      count.textContent = `عدد المنتجات المعروضة: ${items.length}`;
+
+      items.forEach(deal => {
+        const card = document.createElement("article");
+        card.className = "deal-card";
+
+        const image = document.createElement("img");
+        image.className = "deal-image";
+        image.referrerPolicy = "no-referrer";
+        image.src = deal.image;
+        image.alt = deal.title_en || "منتج";
+        image.loading = "lazy";
+
+        const body = document.createElement("div");
+        body.className = "deal-body";
+
+        const title = document.createElement("h2");
+        title.className = "deal-title";
+        title.textContent = deal.title_en || "منتج";
+
+        const store = document.createElement("div");
+        store.className = "deal-store";
+        store.textContent = deal.store || "";
+
+        const price = document.createElement("div");
+        price.className = "deal-price";
+        price.textContent = deal.price != null
+          ? `${deal.price} ${deal.currency || "USD"}`
+          : "السعر غير متوفر";
+
+        body.appendChild(title);
+        body.appendChild(store);
+        body.appendChild(price);
+
+        if (deal.discount && Number(deal.discount) > 0) {
+          const discount = document.createElement("span");
+          discount.className = "deal-discount";
+          discount.textContent = `خصم ${deal.discount}%`;
+          body.appendChild(discount);
+        }
+
+        if (deal.affiliate_url) {
+          const button = document.createElement("a");
+          button.className = "deal-button";
+          button.href = deal.affiliate_url;
+          button.target = "_blank";
+          button.rel = "nofollow sponsored noopener";
+          button.textContent = "شاهد العرض";
+          body.appendChild(button);
+        }
+
+        card.appendChild(image);
+        card.appendChild(body);
+        grid.appendChild(card);
+      });
+    }
+
+    async function loadDeals() {
+      try {
+        const response = await fetch("../data/deals.json", { cache: "no-store" });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        deals = await response.json();
+        render(deals);
+      } catch (error) {
+        console.error(error);
+        grid.innerHTML = "";
+        count.textContent = "";
+        state.textContent = "تعذر تحميل المنتجات. تحقق من ملف البيانات.";
+      }
+    }
+
+    searchForm.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const query = searchInput.value.trim().toLowerCase();
+
+      if (!query) {
+        render(deals);
+        return;
+      }
+
+      const filtered = deals.filter(deal =>
+        String(deal.title_en || "").toLowerCase().includes(query) ||
+        String(deal.title_ar || "").toLowerCase().includes(query) ||
+        String(deal.store || "").toLowerCase().includes(query)
+      );
+
+      render(filtered);
+    });
+
+    loadDeals();
+  </script>
+</body>
+</html>

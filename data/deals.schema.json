@@ -6,7 +6,6 @@
     "type": "object",
     "required": [
       "id",
-      "title_ar",
       "store",
       "category",
       "country",
@@ -33,34 +32,56 @@
         "type": "string"
       },
       "price": {
-        "type": ["number", "null"]
+        "type": [
+          "number",
+          "null"
+        ]
       },
       "currency": {
         "type": "string"
       },
       "discount": {
-        "type": ["number", "null"],
+        "type": [
+          "number",
+          "null"
+        ],
         "minimum": 0,
         "maximum": 100
       },
       "image": {
-        "type": ["string", "null"]
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "description_ar": {
         "type": "string"
       },
       "product_url": {
-        "type": ["string", "null"]
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "affiliate_url": {
-        "type": ["string", "null"]
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "verified_at": {
-        "type": ["string", "null"]
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "status": {
         "type": "string",
-        "enum": ["draft", "active", "expired"]
+        "enum": [
+          "draft",
+          "active",
+          "expired"
+        ]
       }
     },
     "additionalProperties": false
