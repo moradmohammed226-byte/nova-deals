@@ -1,3 +1,10 @@
 .DS_Store
 *.log
 .env
+
+# NOVA Deals local feed/test files
+.admitad_feed_url
+admitad_*.xml
+admitad_*.json
+stream_test.py
+tools/__pycache__/
