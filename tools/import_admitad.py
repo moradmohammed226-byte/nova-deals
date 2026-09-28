@@ -104,49 +104,37 @@ def iter_products(stream):
 
 
 def select_products(groups):
-    # Keep the strongest candidates per category, limiting memory growth.
-    for category in groups:
-        groups[category].sort(
-            key=lambda x: (-x["_score"], -x["discount"], x["price"])
-        )
-        del groups[category][TOP_PER_CATEGORY:]
-
-    # Phase 1: guarantee category diversity.
-    category_order = sorted(
-        groups,
-        key=lambda category: (
-            groups[category][0]["_score"],
-            len(groups[category]),
-            groups[category][0]["discount"],
-        ),
-        reverse=True,
-    )
+    TARGET = 100
+    MAX_PER_CATEGORY = 6
 
     selected = []
+    positions = {category: 0 for category in groups}
 
-    for category in category_order:
-        if len(selected) >= TARGET:
-            break
-        selected.append(groups[category][0])
-
-    positions = Counter(product["category"] for product in selected)
-
-    # Phase 2: fill remaining positions with diminishing returns.
     while len(selected) < TARGET:
         best = None
 
         for category, candidates in groups.items():
             index = positions[category]
 
-            if index >= len(candidates):
+            if index >= MAX_PER_CATEGORY or index >= len(candidates):
                 continue
 
             candidate = candidates[index]
-            diversity_factor = 1.0 / (positions[category] + 1) ** 0.5
+
+            # Mild diversity penalty: additional products from the same
+            # category must be progressively stronger to be selected.
+            diversity_factor = 1.0 / (1.0 + 0.20 * index)
             adjusted_score = candidate["_score"] * diversity_factor
 
-            if best is None or adjusted_score > best[0]:
-                best = (adjusted_score, category, candidate)
+            key = (
+                adjusted_score,
+                candidate["_score"],
+                candidate["discount"],
+                -candidate["price"],
+            )
+
+            if best is None or key > best[0]:
+                best = (key, category, candidate)
 
         if best is None:
             break
@@ -154,9 +142,6 @@ def select_products(groups):
         _, category, candidate = best
         selected.append(candidate)
         positions[category] += 1
-
-    for product in selected:
-        product.pop("_score", None)
 
     return selected
 
@@ -172,6 +157,29 @@ def main():
         accepted += 1
 
     selected = select_products(groups)
+
+    output_fields = {
+        "id",
+        "title_ar",
+        "title_en",
+        "store",
+        "category",
+        "country",
+        "price",
+        "currency",
+        "discount",
+        "image",
+        "description_ar",
+        "product_url",
+        "affiliate_url",
+        "verified_at",
+        "status",
+    }
+
+    selected = [
+        {key: product.get(key) for key in output_fields}
+        for product in selected
+    ]
 
     print(json.dumps(selected, ensure_ascii=False, indent=2))
 
