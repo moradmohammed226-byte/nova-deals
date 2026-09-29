@@ -7,6 +7,164 @@
     <link rel="canonical" href="https://moradmohammed226-byte.github.io/nova-deals/categories/egypt.html">
     <title>عروض مصر وخصومات المتاجر الإلكترونية | نوفا ديلز</title>
     <link rel="stylesheet" href="../style.css">
+<style>
+.category-deals-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 24px;
+}
+
+.category-deal-card {
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    box-sizing: border-box;
+}
+
+.category-deal-image {
+    width: 100%;
+    height: 190px;
+    min-height: 190px;
+    flex: none;
+    overflow: hidden;
+    background: #f8fafc;
+}
+
+.category-deal-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.category-deal-body {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px;
+    box-sizing: border-box;
+}
+
+.category-deal-body h3 {
+    min-width: 0;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.45;
+    font-weight: 700;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+}
+
+.category-deal-store {
+    min-width: 0;
+    color: #64748b;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.category-deal-price {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.category-deal-bottom {
+    margin-top: auto;
+    padding-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.category-deal-discount {
+    color: #0f766e;
+    background: #f0fdfa;
+    border-radius: 7px;
+    padding: 4px 7px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.category-deal-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 8px 11px;
+    border-radius: 8px;
+    background: #0f766e;
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.category-deal-button:hover {
+    opacity: .9;
+}
+
+.category-deals-state {
+    margin-top: 16px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+@media (max-width: 900px) {
+    .category-deals-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .category-deals-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .category-deal-image {
+        height: 140px;
+        min-height: 140px;
+    }
+
+    .category-deal-body {
+        padding: 10px;
+        gap: 7px;
+    }
+
+    .category-deal-body h3 {
+        font-size: 13px;
+        line-height: 1.35;
+    }
+
+    .category-deal-price {
+        font-size: 16px;
+    }
+
+    .category-deal-bottom {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .category-deal-button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+</style>
+
 </head>
 <body>
     <header class="site-header">
@@ -25,9 +183,8 @@
     <main class="container content-section">
         <h2>أقوى عروض المتاجر الإلكترونية في مصر</h2>
         <p>تابعي خصومات المتاجر الكبرى وخدمات التوصيل السريع داخل المحافظات المصرية.</p>
-        <div class="deals-grid">
-            <p>جاري تحديث العروض...</p>
-        </div>
+        <div class="category-deals-grid" id="categoryDealsGrid"></div>
+<p class="category-deals-state" id="categoryState">جاري تحميل العروض...</p>
     </main>
 
     <footer class="site-footer">
@@ -35,5 +192,105 @@
             <p>&copy; 2026 نوفا ديلز. جميع الحقوق محفوظة.</p>
         </div>
     </footer>
+
+<script>
+(async function loadCategoryDeals() {
+    const grid = document.getElementById("categoryDealsGrid");
+    const state = document.getElementById("categoryState");
+    if (!grid) return;
+
+    const filters = window.NOVA_CATEGORY_FILTERS || null;
+
+    try {
+        const response = await fetch("../data/deals.json", { cache: "no-store" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        const allDeals = await response.json();
+
+        const deals = filters
+            ? allDeals.filter(deal => {
+                const category = String(deal.category || "");
+                return filters.some(prefix => category.startsWith(prefix));
+            })
+            : allDeals;
+
+        grid.innerHTML = "";
+
+        if (!deals.length) {
+            state.textContent = "لا توجد منتجات مطابقة حاليًا.";
+            state.style.display = "block";
+            return;
+        }
+
+        state.textContent = `عدد المنتجات: ${deals.length}`;
+        state.style.display = "block";
+
+        deals.forEach(deal => {
+            const card = document.createElement("article");
+            card.className = "category-deal-card";
+
+            const imageBox = document.createElement("div");
+            imageBox.className = "category-deal-image";
+
+            const img = document.createElement("img");
+            img.src = deal.image || "";
+            img.alt = deal.title_en || "منتج";
+            img.loading = "lazy";
+            img.referrerPolicy = "no-referrer";
+            imageBox.appendChild(img);
+
+            const body = document.createElement("div");
+            body.className = "category-deal-body";
+
+            const title = document.createElement("h3");
+            title.textContent = deal.title_ar || deal.title_en || "منتج";
+            title.dir = /[\u0600-\u06FF]/.test(title.textContent) ? "rtl" : "ltr";
+
+            const store = document.createElement("div");
+            store.className = "category-deal-store";
+            store.textContent = deal.store || "";
+
+            const price = document.createElement("div");
+            price.className = "category-deal-price";
+            price.textContent = deal.price != null
+                ? `${deal.price} ${deal.currency || "USD"}`
+                : "";
+
+            const bottom = document.createElement("div");
+            bottom.className = "category-deal-bottom";
+
+            if (deal.discount != null && Number(deal.discount) > 0) {
+                const discount = document.createElement("span");
+                discount.className = "category-deal-discount";
+                discount.textContent = `خصم ${deal.discount}%`;
+                bottom.appendChild(discount);
+            }
+
+            if (deal.affiliate_url) {
+                const link = document.createElement("a");
+                link.href = deal.affiliate_url;
+                link.target = "_blank";
+                link.rel = "nofollow sponsored noopener";
+                link.className = "category-deal-button";
+                link.textContent = "شاهد العرض";
+                bottom.appendChild(link);
+            }
+
+            body.appendChild(title);
+            body.appendChild(store);
+            body.appendChild(price);
+            body.appendChild(bottom);
+
+            card.appendChild(imageBox);
+            card.appendChild(body);
+            grid.appendChild(card);
+        });
+    } catch (error) {
+        console.error("Category deals loading failed:", error);
+        state.textContent = "تعذر تحميل العروض حاليًا.";
+        state.style.display = "block";
+    }
+})();
+</script>
 </body>
 </html>
