@@ -173,87 +173,12 @@
                     <span class="section-note">🔥 صفقات مختارة</span>
                 </div>
 
-                <div class="deals-grid">
-
-                    <article class="deal-card">
-                        <div class="deal-image blue">📱</div>
-
+                <div class="deals-grid" id="homeDealsGrid">
+                    <div class="deal-card">
                         <div class="deal-content">
-                            <span class="deal-category">إلكترونيات</span>
-
-                            <h3>هاتف ذكي بمواصفات عالية وخصم حصري</h3>
-
-                            <p>
-                                اكتشف تفاصيل العرض ووفر أكثر عند الشراء
-                                من المتجر المعتمد.
-                            </p>
-
-                            <div class="deal-bottom">
-                                <div>
-                                    <small>خصم حتى</small>
-                                    <strong>45%</strong>
-                                </div>
-
-                                <a href="deals/example-product/index.html"
-                                   class="btn-affiliate">
-                                    عرض الصفقة
-                                </a>
-                            </div>
+                            <h3>جاري تحميل العروض...</h3>
                         </div>
-                    </article>
-
-                    <article class="deal-card">
-                        <div class="deal-image orange">🎧</div>
-
-                        <div class="deal-content">
-                            <span class="deal-category">إلكترونيات</span>
-
-                            <h3>سماعات لاسلكية بعزل ضوضاء ممتاز</h3>
-
-                            <p>
-                                صفقة مميزة على منتج مطلوب لفترة محدودة.
-                            </p>
-
-                            <div class="deal-bottom">
-                                <div>
-                                    <small>خصم حتى</small>
-                                    <strong>35%</strong>
-                                </div>
-
-                                <a href="deals/example-product/index.html"
-                                   class="btn-affiliate">
-                                    عرض الصفقة
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="deal-card">
-                        <div class="deal-image green">🏠</div>
-
-                        <div class="deal-content">
-                            <span class="deal-category">المنزل</span>
-
-                            <h3>منتجات منزلية بأسعار مخفضة</h3>
-
-                            <p>
-                                اختر من مجموعة من العروض المنزلية اليومية.
-                            </p>
-
-                            <div class="deal-bottom">
-                                <div>
-                                    <small>خصم حتى</small>
-                                    <strong>50%</strong>
-                                </div>
-
-                                <a href="deals/example-product/index.html"
-                                   class="btn-affiliate">
-                                    عرض الصفقة
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
+                    </div>
                 </div>
 
             </div>
@@ -324,6 +249,95 @@
 
         </div>
     </footer>
+
+
+<script>
+(async function loadHomeDeals() {
+    const grid = document.getElementById("homeDealsGrid");
+    if (!grid) return;
+
+    try {
+        const response = await fetch("data/deals.json", { cache: "no-store" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        const deals = await response.json();
+        grid.innerHTML = "";
+
+        deals.slice(0, 6).forEach(deal => {
+            const card = document.createElement("article");
+            card.className = "deal-card";
+
+            const image = document.createElement("div");
+            image.className = "deal-image";
+            if (deal.image) {
+                const img = document.createElement("img");
+                img.src = deal.image;
+                img.alt = deal.title_en || deal.title_ar || "منتج";
+                img.loading = "lazy";
+                img.referrerPolicy = "no-referrer";
+                img.style.width = "100%";
+                img.style.height = "100%";
+                img.style.objectFit = "cover";
+                image.appendChild(img);
+            }
+
+            const content = document.createElement("div");
+            content.className = "deal-content";
+
+            const category = document.createElement("span");
+            category.className = "deal-category";
+            category.textContent = deal.category || "عروض";
+
+            const title = document.createElement("h3");
+            title.textContent = deal.title_ar || deal.title_en || "منتج";
+            title.dir = /[\u0600-\u06FF]/.test(title.textContent) ? "rtl" : "ltr";
+
+            const price = document.createElement("p");
+            price.textContent = deal.price != null
+                ? `${deal.price} ${deal.currency || "USD"}`
+                : "";
+
+            const bottom = document.createElement("div");
+            bottom.className = "deal-bottom";
+
+            const info = document.createElement("div");
+
+            if (deal.discount != null) {
+                const small = document.createElement("small");
+                small.textContent = "خصم";
+                const strong = document.createElement("strong");
+                strong.textContent = `${deal.discount}%`;
+                info.appendChild(small);
+                info.appendChild(strong);
+            }
+
+            bottom.appendChild(info);
+
+            if (deal.affiliate_url) {
+                const link = document.createElement("a");
+                link.href = deal.affiliate_url;
+                link.className = "btn-affiliate";
+                link.target = "_blank";
+                link.rel = "nofollow sponsored noopener";
+                link.textContent = "عرض الصفقة";
+                bottom.appendChild(link);
+            }
+
+            content.appendChild(category);
+            content.appendChild(title);
+            content.appendChild(price);
+            content.appendChild(bottom);
+
+            card.appendChild(image);
+            card.appendChild(content);
+            grid.appendChild(card);
+        });
+    } catch (error) {
+        console.error("Home deals loading failed:", error);
+        grid.innerHTML = "";
+    }
+})();
+</script>
 
 </body>
 </html>

@@ -554,7 +554,15 @@ input {
     height: 170px;
     display: grid;
     place-items: center;
+    overflow: hidden;
     font-size: 64px;
+}
+
+.deal-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .deal-image.blue {
@@ -591,6 +599,10 @@ input {
     font-size: 18px;
     line-height: 1.45;
     font-weight: 850;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
 }
 
 .deal-card p {
