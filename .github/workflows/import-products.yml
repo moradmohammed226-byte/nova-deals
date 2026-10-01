@@ -1,0 +1,105 @@
+name: Import Products
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  import-products:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Fetch Admitad feed
+        env:
+          ADMITAD_FEED_URL: ${{ secrets.ADMITAD_FEED_URL }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${ADMITAD_FEED_URL:-}" ]; then
+            echo "ERROR: ADMITAD_FEED_URL secret is not configured."
+            exit 1
+          fi
+
+          curl --fail --location --silent --show-error \
+            --retry 3 --retry-delay 5 \
+            "$ADMITAD_FEED_URL" \
+            -o /tmp/admitad-feed.xml
+
+          test -s /tmp/admitad-feed.xml
+          echo "FEED_FETCH_OK"
+
+      - name: Import products
+        run: |
+          set -euo pipefail
+
+          python tools/import_admitad.py \
+            < /tmp/admitad-feed.xml \
+            > /tmp/imported-deals.json \
+            2> /tmp/import-stats.txt
+
+          cat /tmp/import-stats.txt
+
+          if grep -Eq 'parsed=0|accepted=0' /tmp/import-stats.txt; then
+            echo "ERROR: parsed or accepted product count is zero."
+            exit 1
+          fi
+
+          test -s /tmp/imported-deals.json
+
+      - name: Normalize categories
+        run: |
+          set -euo pipefail
+
+          python tools/normalize_categories.py \
+            --input /tmp/imported-deals.json \
+            --output /tmp/normalized-deals.json \
+            --apply
+
+      - name: Validate imported data
+        run: |
+          set -euo pipefail
+
+          python tools/validate_deals.py \
+            --input /tmp/normalized-deals.json
+
+      - name: Check duplicates
+        run: |
+          set -euo pipefail
+
+          python tools/dedupe_deals.py \
+            --input /tmp/normalized-deals.json
+
+      - name: Save valid data
+        run: |
+          set -euo pipefail
+
+          cp /tmp/normalized-deals.json data/deals.json
+
+      - name: Commit and push changes
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/deals.json
+
+          if git diff --cached --quiet; then
+            echo "NO_DATA_CHANGES"
+            exit 0
+          fi
+
+          git commit -m "Update imported products"
+          git push

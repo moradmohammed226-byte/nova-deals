@@ -1,34 +1,93 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "NOVA Deals",
+  "title": "SUDX Market Deals",
   "type": "array",
   "items": {
     "type": "object",
     "required": [
       "id",
-      "store",
+      "source",
+      "source_product_id",
+      "title_en",
+      "title_ar",
+      "description_en",
+      "description_ar",
       "category",
+      "raw_category",
+      "subcategory",
+      "store",
       "country",
       "currency",
-      "status"
+      "price",
+      "original_price",
+      "discount",
+      "image",
+      "product_url",
+      "affiliate_url",
+      "created_at",
+      "updated_at",
+      "status",
+      "published_website",
+      "published_telegram",
+      "published_facebook",
+      "verified_at"
     ],
     "properties": {
       "id": {
         "type": "string"
       },
-      "title_ar": {
+      "source": {
         "type": "string"
+      },
+      "source_product_id": {
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "title_en": {
         "type": "string"
       },
-      "store": {
+      "title_ar": {
+        "type": "string"
+      },
+      "description_en": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "description_ar": {
         "type": "string"
       },
       "category": {
+        "type": "string",
+        "enum": [
+          "fashion",
+          "electronics",
+          "home",
+          "other"
+        ]
+      },
+      "raw_category": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "subcategory": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "store": {
         "type": "string"
       },
       "country": {
+        "type": "string"
+      },
+      "currency": {
         "type": "string"
       },
       "price": {
@@ -37,8 +96,11 @@
           "null"
         ]
       },
-      "currency": {
-        "type": "string"
+      "original_price": {
+        "type": [
+          "number",
+          "null"
+        ]
       },
       "discount": {
         "type": [
@@ -54,9 +116,6 @@
           "null"
         ]
       },
-      "description_ar": {
-        "type": "string"
-      },
       "product_url": {
         "type": [
           "string",
@@ -69,7 +128,13 @@
           "null"
         ]
       },
-      "verified_at": {
+      "created_at": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "updated_at": {
         "type": [
           "string",
           "null"
@@ -81,6 +146,30 @@
           "draft",
           "active",
           "expired"
+        ]
+      },
+      "published_website": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "published_telegram": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "published_facebook": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "verified_at": {
+        "type": [
+          "string",
+          "null"
         ]
       }
     },

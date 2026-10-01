@@ -3,6 +3,9 @@ import json
 import re
 import sys
 import xml.etree.ElementTree as ET
+from pathlib import Path
+
+from lib_common import load_deals, utc_now
 from collections import Counter, defaultdict
 
 G = "http://base.google.com/ns/1.0"
@@ -64,20 +67,30 @@ def parse_item(item):
 
     return {
         "id": offer_id,
-        "title_ar": "",
+        "source": "admitad",
+        "source_product_id": offer_id,
         "title_en": title,
-        "store": "AliExpress",
+        "title_ar": "",
+        "description_en": value(item, "description") or None,
+        "description_ar": "",
         "category": category,
+        "raw_category": category,
+        "subcategory": None,
+        "store": "AliExpress",
         "country": "GLOBAL",
+        "currency": currency or sale_currency,
         "price": round(sale_price, 2),
-        "currency": currency,
+        "original_price": round(regular_price, 2),
         "discount": round(discount, 2),
         "image": image,
-        "description_ar": "",
         "product_url": None,
         "affiliate_url": affiliate_url,
-        "verified_at": None,
+        "created_at": None,
+        "updated_at": None,
         "status": "draft",
+        "published_website": None,
+        "published_telegram": None,
+        "published_facebook": None,
         "_score": score,
     }
 
@@ -146,6 +159,79 @@ def select_products(groups):
     return selected
 
 
+def merge_deals(selected):
+    path = Path("data/deals.json")
+    existing = load_deals(path)
+    now = utc_now()
+
+    feed_fields = {
+        "source",
+        "source_product_id",
+        "title_en",
+        "description_en",
+        "category",
+        "raw_category",
+        "subcategory",
+        "store",
+        "country",
+        "currency",
+        "price",
+        "original_price",
+        "discount",
+        "image",
+        "product_url",
+        "affiliate_url",
+    }
+
+    preserved_fields = {
+        "title_ar",
+        "description_ar",
+        "status",
+        "published_website",
+        "published_telegram",
+        "published_facebook",
+        "verified_at",
+    }
+
+    selected_by_id = {str(product["id"]): product for product in selected}
+    merged = []
+
+    for old in existing:
+        product_id = str(old.get("id"))
+        product = selected_by_id.pop(product_id, None)
+
+        if product is None:
+            merged.append(old)
+            continue
+
+        deal = dict(old)
+        for field in feed_fields:
+            deal[field] = product.get(field)
+
+        if not deal.get("created_at"):
+            deal["created_at"] = now
+        deal["updated_at"] = now
+
+        for field in preserved_fields:
+            if field not in deal:
+                deal[field] = None if field.startswith("published_") else ""
+
+        merged.append(deal)
+
+    for product in selected_by_id.values():
+        deal = dict(product)
+        deal["created_at"] = now
+        deal["updated_at"] = now
+
+        for field in preserved_fields:
+            if field not in deal:
+                deal[field] = None if field.startswith("published_") else ""
+
+        merged.append(deal)
+
+    return merged
+
+
 def main():
     groups = defaultdict(list)
     parsed = 0
@@ -157,41 +243,20 @@ def main():
         accepted += 1
 
     selected = select_products(groups)
+    merged = merge_deals(selected)
 
-    output_fields = {
-        "id",
-        "title_ar",
-        "title_en",
-        "store",
-        "category",
-        "country",
-        "price",
-        "currency",
-        "discount",
-        "image",
-        "description_ar",
-        "product_url",
-        "affiliate_url",
-        "verified_at",
-        "status",
-    }
-
-    selected = [
-        {key: product.get(key) for key in output_fields}
-        for product in selected
-    ]
-
-    print(json.dumps(selected, ensure_ascii=False, indent=2))
+    print(json.dumps(merged, ensure_ascii=False, indent=2))
 
     print(
         f"\n# IMPORT STATS: parsed={parsed} "
-        f"accepted={accepted} categories={len(groups)} selected={len(selected)}",
+        f"accepted={accepted} categories={len(groups)} selected={len(selected)} "
+        f"merged={len(merged)}",
         file=sys.stderr,
     )
 
     print("# CATEGORY DISTRIBUTION:", file=sys.stderr)
     for category, count in Counter(
-        product["category"] for product in selected
+        product["category"] for product in merged
     ).most_common():
         print(f"# {count:2d} | {category}", file=sys.stderr)
 
