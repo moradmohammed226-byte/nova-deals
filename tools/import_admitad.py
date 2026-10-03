@@ -37,6 +37,12 @@ def parse_item(item):
     title = value(item, "title")
     category = value(item, "product_type")
     image = value(item, "image_link")
+
+    # Reject source categories that are not supported by normalize_categories.py.
+    from normalize_categories import CATEGORY_MAP
+    root_category = str(category or "").split(" > ", 1)[0].strip()
+    if root_category not in CATEGORY_MAP:
+        return None
     affiliate_url = value(item, "link")
     availability = value(item, "availability").lower()
 
