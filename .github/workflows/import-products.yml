@@ -32,7 +32,10 @@ jobs:
             exit 1
           fi
 
+          echo "FEED_FETCH_START"
           curl --fail --location --silent --show-error \
+            --connect-timeout 30 \
+            --max-time 300 \
             --retry 3 --retry-delay 5 \
             "$ADMITAD_FEED_URL" \
             -o /tmp/admitad-feed.xml
