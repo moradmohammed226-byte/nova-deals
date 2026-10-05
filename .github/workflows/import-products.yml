@@ -106,6 +106,36 @@ jobs:
               print(" -", cid, "=>", info["name"])
               cid = info["parent"]
 
+          from collections import Counter
+
+          category_counts = Counter()
+
+          for offer in offers:
+              category_id = next(
+                  (child.text.strip() for child in offer
+                   if local(child.tag) == "categoryId" and child.text),
+                  None
+              )
+
+              seen = set()
+              cid = category_id
+              top_name = None
+
+              while cid and cid not in seen:
+                  seen.add(cid)
+                  info = category_map.get(cid)
+                  if not info:
+                      break
+                  top_name = info["name"]
+                  cid = info["parent"]
+
+              if top_name:
+                  category_counts[top_name] += 1
+
+          print("XML_TOP_CATEGORY_DISTRIBUTION:")
+          for name, count in category_counts.most_common(30):
+              print(" -", count, "=>", name)
+
           print("XML_DIAGNOSTICS_END")
           PY2
 
