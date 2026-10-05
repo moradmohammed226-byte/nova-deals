@@ -26,6 +26,24 @@ CATEGORY_MAP = {
     "Tools": "other",
     "Sports & Entertainment": "other",
     "Beauty & Health": "other",
+
+    # SUNSKY categories
+    "Smart Phones": "electronics",
+    "Mobile Accessories": "electronics",
+    "Apple Accessories": "electronics",
+    "Computer & Networking": "electronics",
+    "Samsung Accessories": "electronics",
+    "Smart Wear": "electronics",
+    "Mobile Parts": "electronics",
+    "DJI & Insta360 Accessories": "electronics",
+    "Camera Accessories": "electronics",
+    "Samsung Parts": "electronics",
+    "Apple Parts": "electronics",
+    "Security": "electronics",
+    "Game Accessories": "electronics",
+    "In Car": "other",
+    "Jewelry & Apparel": "fashion",
+    "Outdoor & Sports": "other",
 }
 
 VALID_CATEGORIES = {"fashion", "electronics", "home", "other"}
