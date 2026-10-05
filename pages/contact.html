@@ -1,470 +1,172 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="تواصل مع SUDX Market للاستفسارات والاقتراحات والتعاون التجاري عبر قنوات التواصل الرسمية.">
-    <link rel="canonical" href="https://moradmohammed226-byte.github.io/nova-deals/pages/contact.html">
-    <title>اتصل بنا | SUDX Market</title>
-
-    <style>
-        :root{
-            --sand:#e3cf9f;
-            --sand-light:#f4e9cf;
-            --brown:#5b422b;
-            --brown-dark:#342417;
-            --gold:#c5a35a;
-            --cream:#fffdf8;
-            --ink:#28221c;
-            --muted:#857665;
-            --line:#eadfcb;
-            --shadow:0 16px 45px rgba(74,52,26,.10);
-            --radius:28px;
-        }
-
-        *{box-sizing:border-box}
-        html{scroll-behavior:smooth}
-        body{
-            margin:0;
-            color:var(--ink);
-            background:#fff;
-            font-family:Tahoma, Arial, sans-serif;
-            line-height:1.8;
-        }
-        a{text-decoration:none;color:inherit}
-        .contact-page{overflow:hidden}
-
-        .contact-nav{
-            position:sticky;
-            top:0;
-            z-index:50;
-            background:rgba(255,253,248,.92);
-            backdrop-filter:blur(16px);
-            border-bottom:1px solid rgba(91,66,43,.08);
-        }
-        .nav-inner{
-            width:min(1160px, calc(100% - 32px));
-            margin:auto;
-            min-height:72px;
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            gap:20px;
-        }
-        .brand{
-            font-size:1.25rem;
-            font-weight:900;
-            letter-spacing:.04em;
-            color:var(--brown-dark);
-        }
-        .brand span{color:var(--gold)}
-        .nav-links{
-            display:flex;
-            flex-wrap:wrap;
-            justify-content:center;
-            gap:8px;
-        }
-        .nav-links a{
-            padding:8px 12px;
-            border-radius:999px;
-            color:#655645;
-            font-size:.9rem;
-            transition:.2s ease;
-        }
-        .nav-links a:hover,
-        .nav-links a.active{
-            background:var(--sand-light);
-            color:var(--brown-dark);
-        }
-
-        .hero{
-            position:relative;
-            background:
-                radial-gradient(circle at 83% 25%, rgba(255,255,255,.34), transparent 22%),
-                radial-gradient(circle at 72% 80%, rgba(255,255,255,.18), transparent 20%),
-                linear-gradient(135deg,#d7bd86,#ead9ad 55%,#d7bf88);
-            padding:70px 0 72px;
-        }
-        .hero::before,
-        .hero::after{
-            content:"";
-            position:absolute;
-            border:1px solid rgba(255,255,255,.20);
-            border-radius:50%;
-            pointer-events:none;
-        }
-        .hero::before{
-            width:380px;height:380px;
-            left:52%;
-            top:-170px;
-        }
-        .hero::after{
-            width:260px;height:260px;
-            right:5%;
-            bottom:-150px;
-        }
-        .hero-inner{
-            width:min(1160px, calc(100% - 32px));
-            margin:auto;
-            display:grid;
-            grid-template-columns:1.15fr .85fr;
-            align-items:center;
-            gap:64px;
-            position:relative;
-            z-index:1;
-        }
-        .hero-visual{
-            order:2;
-            border-radius:30px;
-            overflow:hidden;
-            box-shadow:0 24px 60px rgba(67,46,24,.20);
-            background:#d8c08e;
-        }
-        .hero-visual img{
-            display:block;
-            width:100%;
-            height:auto;
-            aspect-ratio:1200/760;
-            object-fit:cover;
-        }
-        .hero-copy{order:1}
-        .eyebrow{
-            display:inline-flex;
-            align-items:center;
-            gap:8px;
-            color:#6f5635;
-            font-size:.86rem;
-            font-weight:800;
-            margin-bottom:10px;
-        }
-        .eyebrow::before{
-            content:"";
-            width:32px;height:2px;
-            background:var(--brown);
-            border-radius:2px;
-        }
-        .hero h1{
-            margin:0;
-            color:#fff;
-            font-size:clamp(2.25rem,5vw,4.4rem);
-            line-height:1.12;
-            letter-spacing:-.04em;
-            text-shadow:0 4px 18px rgba(65,44,22,.10);
-        }
-        .hero h1 span{display:block}
-        .hero p{
-            max-width:520px;
-            color:rgba(67,48,28,.78);
-            margin:18px 0 0;
-            font-size:1rem;
-        }
-        .hero-badge{
-            margin-top:28px;
-            display:inline-flex;
-            align-items:center;
-            gap:10px;
-            padding:11px 18px;
-            border:1px solid rgba(255,255,255,.48);
-            background:rgba(255,255,255,.22);
-            color:#fff;
-            border-radius:999px;
-            font-weight:800;
-            box-shadow:0 10px 30px rgba(78,55,25,.08);
-        }
-
-        .contact-section{
-            background:#fff;
-            padding:34px 0 74px;
-        }
-        .container{
-            width:min(1100px, calc(100% - 32px));
-            margin:auto;
-        }
-        .cards{
-            display:grid;
-            grid-template-columns:repeat(3,1fr);
-            gap:18px;
-            margin-top:-4px;
-            position:relative;
-            z-index:5;
-        }
-        .contact-card{
-            background:var(--cream);
-            border:1px solid rgba(91,66,43,.08);
-            border-radius:22px;
-            padding:26px 20px;
-            text-align:center;
-            box-shadow:var(--shadow);
-            transition:transform .2s ease, box-shadow .2s ease;
-        }
-        .contact-card:hover{
-            transform:translateY(-5px);
-            box-shadow:0 22px 52px rgba(74,52,26,.15);
-        }
-        .icon{
-            width:54px;height:54px;
-            margin:0 auto 12px;
-            border-radius:18px;
-            display:grid;
-            place-items:center;
-            font-size:1.45rem;
-            background:var(--sand-light);
-        }
-        .contact-card h2{
-            font-size:1rem;
-            margin:0 0 6px;
-            color:var(--brown-dark);
-        }
-        .contact-card p{
-            margin:0;
-            color:var(--muted);
-            font-size:.82rem;
-        }
-        .contact-card a{
-            display:inline-block;
-            margin-top:5px;
-            color:#8a6a35;
-            font-weight:800;
-            word-break:break-word;
-        }
-
-        .location{
-            margin-top:62px;
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:44px;
-            align-items:center;
-            background:#faf9f5;
-            border-radius:30px;
-            padding:34px;
-            border:1px solid #eee7d9;
-        }
-        .location-visual{
-            min-height:300px;
-            border-radius:24px;
-            background:
-                linear-gradient(rgba(255,255,255,.55),rgba(255,255,255,.55)),
-                repeating-linear-gradient(25deg,#e4e9e7 0 2px,transparent 2px 36px),
-                repeating-linear-gradient(155deg,#d7dfdc 0 2px,transparent 2px 44px);
-            position:relative;
-            overflow:hidden;
-        }
-        .location-visual::before{
-            content:"";
-            position:absolute;
-            inset:20% 12%;
-            border:2px dashed rgba(91,66,43,.20);
-            border-radius:45% 55% 40% 60%;
-            transform:rotate(-8deg);
-        }
-        .pin{
-            position:absolute;
-            left:50%;
-            top:50%;
-            transform:translate(-50%,-50%);
-            width:64px;height:64px;
-            border-radius:50% 50% 50% 0;
-            background:#b8914a;
-            rotate:-45deg;
-            box-shadow:0 15px 30px rgba(91,66,43,.18);
-        }
-        .pin::after{
-            content:"";
-            position:absolute;
-            width:18px;height:18px;
-            border-radius:50%;
-            background:#fff;
-            left:23px;top:23px;
-        }
-        .location-copy h2{
-            margin:0 0 18px;
-            color:var(--brown-dark);
-            font-size:2rem;
-        }
-        .location-copy h2::after{
-            content:"";
-            display:block;
-            width:70px;
-            height:3px;
-            margin-top:10px;
-            background:var(--brown);
-            border-radius:3px;
-        }
-        .details{
-            display:grid;
-            gap:12px;
-            color:#655645;
-        }
-        .detail{
-            display:flex;
-            gap:12px;
-            align-items:flex-start;
-        }
-        .detail strong{color:var(--brown-dark)}
-        .actions{
-            display:flex;
-            flex-wrap:wrap;
-            gap:10px;
-            margin-top:24px;
-        }
-        .btn{
-            display:inline-flex;
-            align-items:center;
-            justify-content:center;
-            min-height:44px;
-            padding:10px 18px;
-            border-radius:999px;
-            font-weight:900;
-            font-size:.88rem;
-        }
-        .btn.primary{
-            color:#fff;
-            background:linear-gradient(135deg,#a37c38,#d0ac5e);
-            box-shadow:0 10px 24px rgba(163,124,56,.22);
-        }
-        .btn.secondary{
-            color:var(--brown-dark);
-            background:#fff;
-            border:1px solid #e1d3b8;
-        }
-
-        .footer{
-            background:#34271c;
-            color:#eadfcb;
-            text-align:center;
-            padding:28px 16px;
-            font-size:.82rem;
-        }
-
-        @media (max-width:850px){
-            .nav-inner{flex-direction:column;padding:12px 0}
-            .nav-links{width:100%;gap:3px}
-            .nav-links a{font-size:.78rem;padding:7px 9px}
-            .hero{padding:38px 0 48px}
-            .hero-inner{
-                grid-template-columns:1fr;
-                gap:28px;
-            }
-            .hero-visual{order:1}
-            .hero-copy{order:2;text-align:center}
-            .hero p{margin-left:auto;margin-right:auto}
-            .hero-badge{margin-top:20px}
-            .cards{grid-template-columns:1fr}
-            .location{
-                grid-template-columns:1fr;
-                padding:20px;
-            }
-            .location-visual{min-height:240px}
-        }
-
-        @media (max-width:480px){
-            .container,.nav-inner,.hero-inner{width:min(100% - 22px,1100px)}
-            .hero h1{font-size:2.45rem}
-            .hero-visual{border-radius:22px}
-            .contact-section{padding-bottom:48px}
-            .contact-card{padding:22px 16px}
-            .location-copy h2{font-size:1.65rem}
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="تواصل مع SUDX Market للاستفسارات والاقتراحات والتعاون التجاري عبر قنوات التواصل الرسمية.">
+  <link rel="canonical" href="https://moradmohammed226-byte.github.io/nova-deals/pages/contact.html">
+  <title>اتصل بنا | SUDX Market</title>
+  <style>
+    :root{
+      --ink:#302c27;
+      --muted:#6f675d;
+      --cream:#f8f4ec;
+      --sand:#ead7a7;
+      --sand2:#f2e2b9;
+      --line:#eadfca;
+      --white:#fffdf9;
+      --accent:#b08b43;
+      --shadow:0 16px 45px rgba(76,57,24,.10);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--cream);color:var(--ink);font-family:Tahoma,Arial,sans-serif;line-height:1.7}
+    a{color:inherit;text-decoration:none}
+    .site-header{background:#fffdf9;border-bottom:1px solid #eee6d8}
+    .nav{max-width:1120px;margin:auto;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:28px}
+    .brand{font-size:28px;font-weight:900;letter-spacing:.5px}
+    .brand span:last-child{color:var(--accent)}
+    .nav-links{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .nav-links a{padding:10px 15px;border-radius:28px;color:#554e45;font-size:15px}
+    .nav-links a:hover,.nav-links .active{background:#f4e7c6}
+    main{overflow:hidden}
+    .hero-wrap{background:linear-gradient(135deg,#e6cf96,#f0dfb3);position:relative}
+    .hero-wrap:before,.hero-wrap:after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.16);pointer-events:none}
+    .hero-wrap:before{width:300px;height:300px;left:-100px;top:-100px}
+    .hero-wrap:after{width:260px;height:260px;right:-80px;bottom:-130px}
+    .hero{max-width:1120px;margin:auto;padding:58px 24px 62px;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(320px,.88fr);align-items:center;gap:54px;direction:ltr}
+    .hero-copy{direction:rtl;text-align:right;padding:10px 0}
+    .eyebrow{font-size:15px;font-weight:800;letter-spacing:2px;color:#6f5b36;margin-bottom:12px}
+    h1{font-size:clamp(42px,6vw,72px);line-height:1.05;margin:0 0 18px;font-weight:900;color:#fff;text-shadow:0 2px 1px rgba(78,59,25,.08)}
+    .hero-sub{font-size:22px;font-weight:800;color:#fff;margin:0 0 14px}
+    .hero-text{max-width:560px;margin:0;color:#51483b;font-size:17px}
+    .hero-image{direction:rtl;background:#ead8ad;border-radius:28px;padding:12px;box-shadow:var(--shadow);position:relative}
+    .hero-image img{display:block;width:100%;height:330px;object-fit:cover;object-position:center 32%;border-radius:20px}
+    .hero-image:after{content:"";position:absolute;inset:12px;border:1px solid rgba(255,255,255,.55);border-radius:20px;pointer-events:none}
+    .contact-section{max-width:1120px;margin:auto;padding:54px 24px 25px}
+    .section-heading{text-align:center;margin-bottom:30px}
+    .section-heading h2{margin:0 0 7px;font-size:32px}
+    .section-heading p{margin:0;color:var(--muted)}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .card{background:var(--white);border:1px solid var(--line);border-radius:22px;padding:27px 22px;text-align:center;box-shadow:0 10px 30px rgba(61,48,28,.06)}
+    .icon{width:54px;height:54px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;background:#f4e6c4;color:#755b2d;font-size:24px;font-weight:900}
+    .card h3{margin:0 0 6px;font-size:19px}
+    .card p{margin:0 0 13px;color:var(--muted);font-size:14px}
+    .card a{font-weight:800;color:#775b2b;overflow-wrap:anywhere}
+    .location{max-width:1120px;margin:0 auto;padding:25px 24px 70px}
+    .location-box{background:#fffdf9;border:1px solid var(--line);border-radius:28px;overflow:hidden;display:grid;grid-template-columns:1.1fr .9fr;box-shadow:var(--shadow)}
+    .map{min-height:300px;background:
+      linear-gradient(25deg,transparent 47%,rgba(176,139,67,.18) 48%,rgba(176,139,67,.18) 50%,transparent 51%),
+      linear-gradient(145deg,transparent 45%,rgba(176,139,67,.13) 46%,rgba(176,139,67,.13) 48%,transparent 49%),
+      #eee4cf;position:relative}
+    .map:before{content:"";position:absolute;inset:38px;border:2px solid rgba(120,93,47,.16);border-radius:18px}
+    .pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-55%);width:70px;height:70px;border-radius:50% 50% 50% 0;background:#b08b43;rotate:-45deg;display:grid;place-items:center;box-shadow:0 12px 25px rgba(76,57,24,.18)}
+    .pin span{rotate:45deg;color:#fff;font-size:28px}
+    .location-copy{padding:42px 36px;display:flex;flex-direction:column;justify-content:center}
+    .location-copy h2{margin:0 0 10px;font-size:32px}
+    .location-copy p{margin:0 0 18px;color:var(--muted)}
+    .location-list{display:grid;gap:11px;margin-bottom:24px}
+    .location-list div{padding:12px 14px;border-radius:13px;background:#f8f1e2}
+    .buttons{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{display:inline-block;padding:11px 18px;border-radius:24px;font-weight:800}
+    .btn.primary{background:#b08b43;color:white}
+    .btn.secondary{background:#f2e4c5;color:#644d27}
+    footer{border-top:1px solid var(--line);padding:25px 20px;text-align:center;color:#756d62;background:#fffdf9;font-size:14px}
+    @media(max-width:800px){
+      .nav{flex-direction:column;padding:18px 16px;gap:13px}
+      .brand{font-size:25px}
+      .nav-links{justify-content:center}
+      .nav-links a{padding:9px 12px}
+      .hero{grid-template-columns:1fr;padding:34px 18px 40px;gap:28px;direction:rtl}
+      .hero-copy{text-align:center}
+      .hero-text{margin-inline:auto}
+      .hero-image{order:-1}
+      .hero-image img{height:275px}
+      .cards{grid-template-columns:1fr}
+      .contact-section,.location{padding-inline:18px}
+      .location-box{grid-template-columns:1fr}
+      .map{min-height:250px}
+      .location-copy{padding:32px 24px}
+    }
+  </style>
 </head>
-
-<body class="contact-page">
-<header class="contact-nav">
-    <div class="nav-inner">
-        <a class="brand" href="../index.html">SU<span>DX</span></a>
-        <nav class="nav-links" aria-label="التنقل الرئيسي">
-            <a href="../index.html">الرئيسية</a>
-            <a href="about.html">من نحن</a>
-            <a href="../categories/electronics.html">الإلكترونيات</a>
-            <a class="active" href="contact.html">اتصل بنا</a>
-        </nav>
+<body>
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="../index.html">SUD<span>X</span></a>
+    <div class="nav-links">
+      <a href="../index.html">الرئيسية</a>
+      <a href="about.html">من نحن</a>
+      <a href="../categories/electronics.html">الإلكترونيات</a>
+      <a class="active" href="contact.html">اتصل بنا</a>
     </div>
+  </nav>
 </header>
 
 <main>
-    <section class="hero">
-        <div class="hero-inner">
-            <div class="hero-visual">
-                <img src="../assets/sudx-founder-contact.png"
-                     alt="صورة مؤسس SUDX"
-                     width="1200"
-                     height="760">
-            </div>
+  <section class="hero-wrap">
+    <div class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">SUDX MARKET</div>
+        <h1>تواصل معنا</h1>
+        <p class="hero-sub">نحن هنا لخدمتك</p>
+        <p class="hero-text">يسعدنا استقبال استفساراتك واقتراحاتك والتعاون معك. اختر وسيلة التواصل المناسبة لك وسنكون سعداء بالرد عليك.</p>
+      </div>
+      <div class="hero-image">
+        <img src="../assets/sudx-founder-contact.png" alt="صورة مؤسس SUDX">
+      </div>
+    </div>
+  </section>
 
-            <div class="hero-copy">
-                <div class="eyebrow">SUDX MARKET</div>
-                <h1>
-                    <span>تواصل معنا</span>
-                    <span>نحن هنا لخدمتك</span>
-                </h1>
-                <p>
-                    يسعدنا استقبال استفساراتك واقتراحاتك والتعاون معك عبر قنوات التواصل الرسمية في SUDX.
-                </p>
-                <div class="hero-badge">✦ تجربة تواصل بسيطة ومباشرة</div>
-            </div>
+  <section class="contact-section">
+    <div class="section-heading">
+      <h2>طرق التواصل</h2>
+      <p>تواصل معنا مباشرة عبر إحدى القنوات الرسمية</p>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <div class="icon">✉</div>
+        <h3>البريد الإلكتروني</h3>
+        <p>للاستفسارات والتواصل</p>
+        <a href="mailto:quiteflame64@gmail.com">quiteflame64@gmail.com</a>
+      </article>
+      <article class="card">
+        <div class="icon">◉</div>
+        <h3>واتساب</h3>
+        <p>تواصل معنا مباشرة</p>
+        <a href="https://whatsapp.com/dl/" target="_blank" rel="noopener noreferrer">فتح واتساب</a>
+      </article>
+      <article class="card">
+        <div class="icon">☎</div>
+        <h3>الهاتف</h3>
+        <p>للتواصل المباشر</p>
+        <a href="tel:+249924683368">+249 92 468 3368</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="location">
+    <div class="location-box">
+      <div class="map" aria-label="خريطة توضيحية">
+        <div class="pin"><span>●</span></div>
+      </div>
+      <div class="location-copy">
+        <h2>موقعنا</h2>
+        <p>نعمل لخدمة عملائنا في منطقة الشرق الأوسط والخليج.</p>
+        <div class="location-list">
+          <div><strong>المنطقة:</strong> الشرق الأوسط والخليج</div>
+          <div><strong>العلامة:</strong> SUDX Market</div>
+          <div><strong>التواصل:</strong> البريد والهاتف وواتساب وتيليجرام</div>
         </div>
-    </section>
-
-    <section class="contact-section">
-        <div class="container">
-            <div class="cards">
-                <article class="contact-card">
-                    <div class="icon" aria-hidden="true">✉</div>
-                    <h2>البريد الإلكتروني</h2>
-                    <p>للاستفسارات والتواصل</p>
-                    <a href="mailto:quiteflame64@gmail.com">quiteflame64@gmail.com</a>
-                </article>
-
-                <article class="contact-card">
-                    <div class="icon" aria-hidden="true">◉</div>
-                    <h2>واتساب</h2>
-                    <p>تواصل معنا مباشرة</p>
-                    <a href="https://whatsapp.com/dl/" target="_blank" rel="noopener noreferrer">فتح واتساب</a>
-                </article>
-
-                <article class="contact-card">
-                    <div class="icon" aria-hidden="true">✆</div>
-                    <h2>الهاتف</h2>
-                    <p>اتصل بنا مباشرة</p>
-                    <a href="tel:+249924683368">+249 92 468 3368</a>
-                </article>
-            </div>
-
-            <section class="location" aria-labelledby="location-title">
-                <div class="location-visual" aria-hidden="true">
-                    <div class="pin"></div>
-                </div>
-
-                <div class="location-copy">
-                    <h2 id="location-title">موقعنا</h2>
-
-                    <div class="details">
-                        <div class="detail">
-                            <span>📍</span>
-                            <div><strong>النطاق:</strong><br>الشرق الأوسط والخليج</div>
-                        </div>
-                        <div class="detail">
-                            <span>◷</span>
-                            <div><strong>التواصل:</strong><br>عبر البريد والهاتف وواتساب وتيليجرام</div>
-                        </div>
-                        <div class="detail">
-                            <span>✦</span>
-                            <div><strong>العلامة:</strong><br>SUDX Market</div>
-                        </div>
-                    </div>
-
-                    <div class="actions">
-                        <a class="btn primary" href="https://t.me/nova_deals_OFFICIAL" target="_blank" rel="noopener noreferrer">القناة الرسمية</a>
-                        <a class="btn secondary" href="mailto:quiteflame64@gmail.com">راسلنا الآن</a>
-                    </div>
-                </div>
-            </section>
+        <div class="buttons">
+          <a class="btn primary" href="https://t.me/nova_deals_OFFICIAL" target="_blank" rel="noopener noreferrer">القناة الرسمية</a>
+          <a class="btn secondary" href="mailto:quiteflame64@gmail.com">راسلنا الآن</a>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 </main>
 
-<footer class="footer">
-    <div>© 2026 SUDX Market. جميع الحقوق محفوظة.</div>
-</footer>
+<footer>© 2026 SUDX Market. جميع الحقوق محفوظة.</footer>
 </body>
 </html>
