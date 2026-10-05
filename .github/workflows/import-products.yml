@@ -78,6 +78,34 @@ jobs:
           for category in categories[:30]:
               print(" -", ET.tostring(category, encoding="unicode")[:300])
 
+          category_map = {}
+          for category in categories:
+              cid = category.attrib.get("id")
+              if cid:
+                  category_map[cid] = {
+                      "name": (category.text or "").strip(),
+                      "parent": category.attrib.get("parentId")
+                  }
+
+          first_offer = offers[0]
+          first_category = next(
+              (child.text.strip() for child in first_offer
+               if local(child.tag) == "categoryId" and child.text),
+              None
+          )
+
+          print("XML_FIRST_PRODUCT_CATEGORY_CHAIN:")
+          seen = set()
+          cid = first_category
+          while cid and cid not in seen:
+              seen.add(cid)
+              info = category_map.get(cid)
+              if not info:
+                  print(" -", cid, "(NOT_FOUND)")
+                  break
+              print(" -", cid, "=>", info["name"])
+              cid = info["parent"]
+
           print("XML_DIAGNOSTICS_END")
           PY2
 
