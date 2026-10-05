@@ -277,7 +277,7 @@ def iter_products(stream):
 
 def select_products(groups):
     TARGET = 100
-    MAX_PER_CATEGORY = 6
+    MAX_PER_CATEGORY = 25
 
     selected = []
     positions = {category: 0 for category in groups}
