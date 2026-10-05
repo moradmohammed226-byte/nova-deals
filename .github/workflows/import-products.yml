@@ -65,6 +65,15 @@ jobs:
           for child in list(root)[:20]:
               print(" -", child.tag)
 
+          offers = [elem for elem in root.iter() if local(elem.tag) == "offer"]
+          print("XML_OFFER_COUNT:", len(offers))
+
+          if offers:
+              print("XML_FIRST_OFFER_ATTRIBUTES:", sorted(offers[0].attrib.keys()))
+              print("XML_FIRST_OFFER_CHILDREN:")
+              for child in list(offers[0]):
+                  print(" -", child.tag)
+
           print("XML_DIAGNOSTICS_END")
           PY2
 
