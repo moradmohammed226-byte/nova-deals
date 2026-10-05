@@ -43,6 +43,31 @@ jobs:
           test -s /tmp/admitad-feed.xml
           echo "FEED_FETCH_OK"
 
+          echo "XML_DIAGNOSTICS_START"
+          python - <<'PY2'
+          import xml.etree.ElementTree as ET
+          from collections import Counter
+
+          path = "/tmp/admitad-feed.xml"
+          root = ET.parse(path).getroot()
+
+          def local(tag):
+              return tag.rsplit("}", 1)[-1]
+
+          print("XML_ROOT:", local(root.tag))
+          print("XML_ROOT_TAG:", root.tag)
+
+          counts = Counter(local(elem.tag) for elem in root.iter())
+          print("XML_ITEM_COUNT:", counts.get("item", 0))
+          print("XML_ENTRY_COUNT:", counts.get("entry", 0))
+
+          print("XML_TOP_LEVEL_CHILDREN:")
+          for child in list(root)[:20]:
+              print(" -", child.tag)
+
+          print("XML_DIAGNOSTICS_END")
+          PY2
+
       - name: Import products
         run: |
           set -euo pipefail
