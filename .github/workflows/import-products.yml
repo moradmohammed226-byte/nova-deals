@@ -72,7 +72,8 @@ jobs:
               print("XML_FIRST_OFFER_ATTRIBUTES:", sorted(offers[0].attrib.keys()))
               print("XML_FIRST_OFFER_CHILDREN:")
               for child in list(offers[0]):
-                  print(" -", child.tag)
+                  text = (child.text or "").strip().replace("\\n", " ")
+                  print(f" - {local(child.tag)}: {text[:300]}")
 
           print("XML_DIAGNOSTICS_END")
           PY2
